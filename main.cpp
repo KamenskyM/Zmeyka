@@ -1,11 +1,10 @@
+#include <QApplication>
 #include "zmeyka.h"
 
-#include <QApplication>
-
-int main(int argc, char *argv[])
-{
-    QApplication a(argc, argv);
-    Main w;
-    w.show();
-    return a.exec();
+int main(int argc, char *argv[]) {
+  QApplication app(argc, argv);
+  Zmeyka window;
+  window.setWindowTitle("Zmeyka");
+  window.show();
+  return app.exec();
 }
