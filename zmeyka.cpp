@@ -24,8 +24,8 @@ void Zmeyka::loadImages() {
 void Zmeyka::initGame() {
     cells = 3;
     for (int z = 0; z < cells; z++) {
-        x[z] = 50 - z * 10;
-        y[z] = 50;
+        x[z] = 100 - z * 20;
+        y[z] = 100;
     }
     placeApple();
     timerId = startTimer(SPEED);
