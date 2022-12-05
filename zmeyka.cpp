@@ -8,7 +8,7 @@ Zmeyka::Zmeyka(QWidget *parent) : QWidget(parent) {
     inGame = true;
     leftMove = false;
     rightMove = true;
-    upMoven = false;
+    upMove = false;
     downMove = false;
     resize(F_WIDTH, F_HEIGHT);
     loadImages();
@@ -121,18 +121,18 @@ void Zmeyka::keyPressEvent(QKeyEvent *e) {
 }
 
 void Zmeyka::checkContact() {
-    for (int z = dots; z > 0; z--) {
+    for (int z = cells; z > 0; z--) {
         if ((z > 4) && (x[0] == x[z]) && (y[0] == y[z])) {
             inGame = false;
         }
     }
-    if (y[0] >= B_HEIGHT) {
+    if (y[0] >= F_HEIGHT) {
         inGame = false;
     }
     if (y[0] < 0) {
         inGame = false;
     }
-    if (x[0] >= B_WIDTH) {
+    if (x[0] >= F_WIDTH) {
         inGame = false;
     }
     if (x[0] < 0) {
