@@ -6,7 +6,10 @@ Zmeyka::Zmeyka(QWidget *parent) : QWidget(parent) {
 
     setStyleSheet("background-color:black;");
     inGame = true;
-
+    leftMove = false;
+    rightMove = true;
+    upMoven = false;
+    downMove = false;
     resize(F_WIDTH, F_HEIGHT);
     loadImages();
     initGame();
@@ -71,4 +74,88 @@ void Zmeyka::placeApple() {
     apple_x = (r * CELL_SIZE);
     r = qrand() % RAND_POS;
     apple_y = (r * CELL_SIZE);
+}
+
+void Zmeyka::move() {
+    for (int z = cells; z > 0; z--) {
+        x[z] = x[(z - 1)];
+        y[z] = y[(z - 1)];
+    }
+    if (leftMove) {
+        x[0] -= CELL_SIZE;
+    }
+    if (rightMove) {
+        x[0] += CELL_SIZE;
+    }
+    if (upMove) {
+        y[0] -= CELL_SIZE;
+    }
+    if (downMove) {
+        y[0] += CELL_SIZE;
+    }
+}
+
+void Zmeyka::keyPressEvent(QKeyEvent *e) {
+    int key = e->key();
+    if ((key == Qt::Key_Left) && (!rightMove)) {
+        leftMove = true;
+        upMove = false;
+        downMove = false;
+    }
+    if ((key == Qt::Key_Right) && (!leftMove)) {
+        rightMove = true;
+        upMove = false;
+        downMove = false;
+    }
+    if ((key == Qt::Key_Up) && (!downMove)) {
+        upMove = true;
+        rightMove = false;
+        leftMove = false;
+    }
+    if ((key == Qt::Key_Down) && (!upMove)) {
+        downMove = true;
+        rightMove = false;
+        leftMove = false;
+    }
+    QWidget::keyPressEvent(e);
+}
+
+void Zmeyka::checkContact() {
+    for (int z = dots; z > 0; z--) {
+        if ((z > 4) && (x[0] == x[z]) && (y[0] == y[z])) {
+            inGame = false;
+        }
+    }
+    if (y[0] >= B_HEIGHT) {
+        inGame = false;
+    }
+    if (y[0] < 0) {
+        inGame = false;
+    }
+    if (x[0] >= B_WIDTH) {
+        inGame = false;
+    }
+    if (x[0] < 0) {
+        inGame = false;
+    }
+    if(!inGame) {
+        killTimer(timerId);
+    }
+}
+
+void Zmeyka::timerEvent(QTimerEvent *e) {
+    Q_UNUSED(e);
+    if (inGame) {
+        contactApple();
+        checkContact();
+        move();
+    }
+    repaint();
+}
+
+void Zmeyka::contactApple() {
+    if ((x[0] == apple_x) && (y[0] == apple_y)) {
+        cells++;
+        placeApple();
+    }
 }
