@@ -8,8 +8,11 @@ class Zmeyka : public QWidget {
   public:
       Zmeyka(QWidget *parent = 0);
 
+
   protected:
       void paintEvent(QPaintEvent *);
+      void timerEvent(QTimerEvent *);
+      void keyPressEvent(QKeyEvent *);
 
   private:
       QImage tail;
@@ -31,13 +34,19 @@ class Zmeyka : public QWidget {
       int x[ALL_CELLS];
       int y[ALL_CELLS];
 
+      bool leftMove;
+      bool rightMove;
+      bool upMove;
+      bool downMove;
       bool inGame;
 
       void loadImages();
       void initGame();
       void placeApple();
-      void checkApple();
+      void contactApple();
       void doShow();
+      void checkContact();
+      void move();
       void gameOver(QPainter &);
 };
 
