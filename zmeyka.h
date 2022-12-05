@@ -36,7 +36,7 @@ class Zmeyka : public QWidget {
       void loadImages();
       void initGame();
       void placeApple();
-      void checkApple();
+      void contactApple();
       void doShow();
       void gameOver(QPainter &);
 };
